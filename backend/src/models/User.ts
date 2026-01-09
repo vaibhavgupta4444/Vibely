@@ -23,15 +23,19 @@ const userSchema = new mongoose.Schema<IUser>({
     password:{
         type: String,
         required: true,
-        minLength: 6,
-        match: [
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-            "Please enter strong password"
-        ]
+        minLength: 6
     },
     isVerified:{
         type: Boolean,
         default: false
+    },
+    otp:{
+        type: String,
+        select: false
+    },
+    otpExpires:{
+        type: Date,
+        select: false
     }
 },
 {

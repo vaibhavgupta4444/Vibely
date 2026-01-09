@@ -5,5 +5,7 @@ export interface IUser extends Document, base{
     lastName: string,
     email: string,
     password:string,
-    isVerified: boolean
+    isVerified: boolean,
+    otp?: string,
+    otpExpires?: Date,
 }
