@@ -6,7 +6,6 @@ import bcrypt from "bcrypt"
 import { Request, Response } from "express";
 import crypto from "crypto"
 import { sendResetPassLink } from "../../utils/send-mail";
-import { success } from "zod";
 
 // changing password when user loggedIn
 export const changePassword = async (req: AuthenticatedRequest, res: Response) => {
