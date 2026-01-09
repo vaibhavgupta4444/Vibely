@@ -1,25 +1,15 @@
 import { Request, Response } from "express";
-import User from "../models/User";
-import { BadRequestError, ConflictError, HttpError, NotFoundError } from "../utils/https-error";
+import User from "../../models/User";
+import { BadRequestError, ConflictError, HttpError, NotFoundError, UnauthorizedError, ValidationError } from "../../utils/https-error";
 import bcrypt from "bcrypt"
-import { sendMail } from "../utils/send-mail";
-import mongoose from "mongoose";
-import jwt from 'jsonwebtoken'
+import { sendMail } from "../../utils/send-mail";
+import { signinSchema } from "../../validators/signin-schema";
+import { signupSchema } from "../../validators/signup-schema";
+import { createToken } from "./create-token";
 
-const createToken = (id: mongoose.Types.ObjectId) => {
-    const secret = process.env.JWT_SECRET;
-    if(!secret){
-        throw new HttpError(404, 'JWT secret not defined')
-    }
-
-    const token = jwt.sign({id}, secret, {expiresIn: '7d'});
-    const refreshToken = jwt.sign({id}, secret, {expiresIn: '30d'});
-
-    return { token, refreshToken}
-}
 
 export const signup = async(req: Request, res: Response) => {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password } = signupSchema.parse(req.body);
     if(!firstName || !email || !password){
         throw BadRequestError("Missing parameters");
     }
@@ -56,7 +46,7 @@ export const signup = async(req: Request, res: Response) => {
 }
 
 export const signin = async(req: Request, res: Response) => {
-    const { email, password } = req.body;
+    const { email, password } = signinSchema.parse(req.body);
 
     if(!email || !password){
         throw BadRequestError("Please provide email and password");
@@ -141,6 +131,7 @@ export const verify = async (req: Request, res: Response) => {
         },
     });
 };
+
 
 
 

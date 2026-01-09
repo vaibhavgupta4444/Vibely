@@ -1,6 +1,9 @@
 import { Router } from "express";
-import { signin, signup, verify } from "../controllers/user-controller";
+import { signin, signup, verify } from "../controllers/user-controllers/user-controller-auth";
+import { refreshToken } from "../controllers/user-controllers/user-controller-token";
+import { resetPassword } from "../controllers/user-controllers/user-controller-password";
 import asyncWrapper from "../utils/async-wrapper";
+import authUser from "../middlewares/auth";
 
 const userRouter = Router();
 
@@ -8,5 +11,7 @@ const userRouter = Router();
 userRouter.post("/signup", asyncWrapper(signup));
 userRouter.post("/signin", asyncWrapper(signin));
 userRouter.patch("/verify", asyncWrapper(verify));
+userRouter.post('/reset', authUser, asyncWrapper(resetPassword));
+userRouter.post('/refresh-token', authUser, asyncWrapper(refreshToken));
 
 export default userRouter;

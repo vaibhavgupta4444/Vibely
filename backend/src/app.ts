@@ -22,7 +22,6 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-  
   if (err instanceof HttpError) {
     return res.status(err.status).json({
       success: false,
