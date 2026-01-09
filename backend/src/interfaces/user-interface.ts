@@ -8,4 +8,6 @@ export interface IUser extends Document, base{
     isVerified: boolean,
     otp?: string,
     otpExpires?: Date,
+    resetToken?: string,
+    resetTokenExpiry?: Date
 }

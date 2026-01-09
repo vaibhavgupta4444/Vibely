@@ -1,7 +1,7 @@
 import { AuthenticatedRequest } from "../../interfaces/auth-request";
 import User from "../../models/User";
 import { NotFoundError, UnauthorizedError } from "../../utils/https-error";
-import { createToken } from "./create-token";
+import { createToken } from "./generate-token";
 import { Response } from "express";
 
 export const refreshToken = async(req: AuthenticatedRequest, res: Response) => {

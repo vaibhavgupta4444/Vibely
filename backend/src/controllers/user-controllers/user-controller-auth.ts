@@ -2,10 +2,10 @@ import { Request, Response } from "express";
 import User from "../../models/User";
 import { BadRequestError, ConflictError, HttpError, NotFoundError, UnauthorizedError, ValidationError } from "../../utils/https-error";
 import bcrypt from "bcrypt"
-import { sendMail } from "../../utils/send-mail";
+import { sendOtp } from "../../utils/send-mail";
 import { signinSchema } from "../../validators/signin-schema";
 import { signupSchema } from "../../validators/signup-schema";
-import { createToken } from "./create-token";
+import { createToken } from "./generate-token";
 
 
 export const signup = async(req: Request, res: Response) => {
@@ -37,7 +37,7 @@ export const signup = async(req: Request, res: Response) => {
         await user.save();
     }
 
-    await sendMail(email, otp);
+    await sendOtp(email, otp);
 
     return res.status(200).json({
         success: true,
