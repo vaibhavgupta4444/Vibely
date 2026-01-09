@@ -31,11 +31,9 @@ const userSchema = new mongoose.Schema<IUser>({
     },
     otp:{
         type: String,
-        select: false
     },
     otpExpires:{
         type: Date,
-        select: false
     }
 },
 {
